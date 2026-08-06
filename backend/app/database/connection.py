@@ -6,10 +6,12 @@ import os
 # Load environment variables
 load_dotenv()
 
-# Get database URL
 DATABASE_URL = os.getenv("DATABASE_URL")
 
-# Create SQLAlchemy engine
+if not DATABASE_URL:
+    raise ValueError("DATABASE_URL is not set")
+
+# Create database engine
 engine = create_engine(DATABASE_URL)
 
 # Create session factory
@@ -18,3 +20,11 @@ SessionLocal = sessionmaker(
     autoflush=False,
     bind=engine
 )
+
+# Dependency for database session
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
