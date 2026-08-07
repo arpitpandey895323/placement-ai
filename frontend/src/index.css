@@ -1,0 +1,35 @@
+@import "tailwindcss";
+
+@keyframes hero-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes hero-bar-grow {
+  from {
+    transform: scaleY(0);
+    opacity: 0;
+  }
+  to {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+.hero-float {
+  animation: hero-float 6s ease-in-out infinite;
+}
+
+.hero-bar {
+  transform-origin: bottom;
+  animation: hero-bar-grow 0.6s ease-out both;
+}
+
+.hero-progress-bar {
+  transition: width 0.1s linear;
+}

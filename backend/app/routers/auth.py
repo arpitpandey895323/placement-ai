@@ -4,7 +4,7 @@ from fastapi.security import OAuth2PasswordBearer
 from app.core.security import verify_token
 from app.database.connection import get_db
 from app.models.user import User
-from app.schemas.user_schema import UserCreate, UserLogin
+from app.schemas.user_schema import UserCreate, UserLogin, Token
 from app.core.security import (
     hash_password,
     verify_password,
@@ -41,7 +41,7 @@ def register(user: UserCreate, db: Session = Depends(get_db)):
     }
 
 
-@router.post("/login")
+@router.post("/login", response_model=Token)
 def login(user: UserLogin, db: Session = Depends(get_db)):
 
     db_user = db.query(User).filter(User.email == user.email).first()
